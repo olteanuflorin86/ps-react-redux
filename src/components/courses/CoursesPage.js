@@ -1,58 +1,68 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {createCourse} from '../../actions/courseActions';
+import {loadCourses} from '../../actions/courseActions';
+import {loadAuthors} from '../../actions/authorActions';
 import Proptypes from 'prop-types';
 import {bindActionCreators} from 'redux';
+import {Redirect} from 'react-router-dom';
+
+import CourseList from './CourseList';
+import ManageCoursePages from './ManageCoursePages';
 
 class CoursesPage extends React.Component {
+  // Maybe instead of a constructor we can add a class field like bellow:
+  // state = {
+  //   redirectToAddCoursePage: false
+  // };
+  // but I get an error: " Support for the experimental syntax 'classProperties' isn't currently enabled"
+  // so for now I'll still use a constructor
+
   constructor(props) {
     super(props);
 
     this.state = {
-      course: {
-        title: ""
-      }
+      redirectToAddCoursePage: false
+    }
+  }
+
+  componentDidMount() {
+
+    // we can use destructure:
+    //const {courses, authors} = this.props;
+
+    // So we will not load again data that we already have
+    if(this.props.courses.length === 0) {
+      this.props.loadCourses()
+        .catch(error => {
+          alert("Loading courses failed " + error);
+        })
     }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    //this.setState({[event.target.name]: event.target.value});
-    const course = {...this.state.course, title: event.target.value};
-    //this.setState({ course: course });
-    this.setState({ course });
-    //console.log(course);
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    //debugger;
-    //this.props.dispatch(createCourse(this.state.course));
-    this.props.createCourse(this.state.course);
-    console.log(this.state.course.title);
+    if(this.props.authors.length === 0) {
+      this.props.loadAuthors()
+        .catch(error => {
+          alert("Loading authors failed " + error);
+        })
+    }
   }
 
   render() {
     return(
       <div>
-      <form onSubmit={this.handleSubmit}>
         <h2>Courses</h2>
-        <h3>Add Course</h3>
-        <input 
-          type="text"
-          onChange={this.handleChange}
-          //onChange={this.handleChange.bind(this)}
-          value={this.state.course.title}
-        />
-        <input type="submit" value="Submit" />
-      </form>
-      {this.props.courses.map((course, index) => {
-        return(
-          <div key={index}>{course.title}</div>
-        )
-      })}
+
+        {/* One way of Redirect with React-Router: */}
+        {/* we will add now also add redirectToAddCoursePage to state*/}
+        {this.state.redirectToAddCoursePage && <Redirect to='/course' />}        
+        <button 
+          style={{marginBottom: 20}}
+          className="btn btn-primary add-course"
+          onClick={() => this.setState({redirectToAddCoursePage: true})}
+        >
+          Add Course
+        </button>
+
+        <CourseList courses={this.props.courses} authors={this.props.authors}/>
       </div>
     )
   }
@@ -60,7 +70,10 @@ class CoursesPage extends React.Component {
 
 CoursesPage.proptypes = {
   courses: Proptypes.array.isRequired,
-  createCourse: Proptypes.func.isRequired
+  authors: Proptypes.array.isRequired,
+  //createCourse: Proptypes.func.isRequired,
+  loadCourses: Proptypes.func.isRequired,
+  loadAuthors: Proptypes.func.isRequired,
 }
 
 // function mapDispatchToProps(dispatch) {
@@ -71,7 +84,9 @@ CoursesPage.proptypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    createCourse: bindActionCreators(createCourse, dispatch)
+    //createCourse: bindActionCreators(createCourse, dispatch),
+    loadCourses: bindActionCreators(loadCourses, dispatch),
+    loadAuthors: bindActionCreators(loadAuthors, dispatch),
   }
 }
 
@@ -79,6 +94,7 @@ function mapStateToProps(state) {
   //debugger;
   return {
     courses: state.courses,
+    authors: state.authors,
   }
 }
 
