@@ -1,5 +1,5 @@
 import {
-  CREATE_COURSE_SUCCESS, LOAD_COURSES_SUCCESS, UPDATE_COURSE_SUCCESS
+  CREATE_COURSE_SUCCESS, DELETE_COURSE_OPTIMISTIC, LOAD_COURSES_SUCCESS, UPDATE_COURSE_SUCCESS
 } from '../actions/types';
 
 export default function courseReducer(state = [], action) {
@@ -16,6 +16,9 @@ export default function courseReducer(state = [], action) {
       return state.map(course => {
         course.id === action.payload.id ? action.payload : course
       });
+    case DELETE_COURSE_OPTIMISTIC:
+      // return all the courses except the one that we want deleted
+      return state.filter(course => course.id !== action.payload.id); 
     default:
       return state;
   }

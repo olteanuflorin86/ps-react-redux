@@ -37,7 +37,7 @@ const CourseForm = ({authors, course, errors={}, onChange, onSave, saving=false}
           }
         })}
         onChange={onChange}
-        error={errors.authors}
+        error={errors.author}
       />
 
       <TextInput 

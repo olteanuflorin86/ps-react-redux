@@ -9,12 +9,17 @@ import CourseForm from './CourseForm';
 import {newCourse} from '../../../tools/mockData';
 import { getCourses } from '../../api/courseApi';
 
+import Spinner from '../common/Spinner';
+
+import {toast} from 'react-toastify';
+
 const ManageCoursePages = (props) => {
   // we need local state to save data from the form before it is send - we use useState 
 
     // props.course refers to newCourse from mockData
     const [course, setCourse] = useState({...props.course});
     const [errors, setErrors] = useState({});
+    const [saving, setSaving] = useState(false);
 
   useEffect(() => {
 
@@ -44,23 +49,44 @@ const ManageCoursePages = (props) => {
     }));
   }
 
+  function formIsValid() {
+    const {title, authorId, category} = course;
+    const errors = {};
+
+    if(!title) errors.title = "Title is required,"; 
+    if(!authorId) errors.author = "Author is required,"; 
+    if(!category) errors.category = "Category is required,"; 
+
+    setErrors(errors);
+    // Form is valid if the erros object still has no properties
+    return Object.keys(errors).length === 0;
+  }
+
   function handleSave(event) {
     event.preventDefault();
-    console.log("save")
+    if(!formIsValid()) return;
+    setSaving(true);
     // course.id = props.courses.length + 1;
     // console.log(course);
     // console.log(course.id);
     // console.log(props.courses);
     // console.log(props.courses.length);
     // console.log(course);
+    //window.location.reload(false);
     props.saveCourse(course).then(() => {
+      toast.success('Course saved.');
       props.history.push("/courses");
-    });
+    }). catch(error => {
+      setSaving(false);
+      setErrors({onSave: error.message});
+    })
   }
 
-  return (
+  return ( props.authors.length === 0 || props.courses.length === 0 
+    ? <Spinner />
+    :
       <div>
-        <CourseForm authors={props.authors} course={course} onChange={handleChange} onSave={handleSave} errors={errors}/>
+        <CourseForm authors={props.authors} course={course} onChange={handleChange} onSave={handleSave} errors={errors} saving={saving}/>
       </div>
   )
 }

@@ -3,6 +3,7 @@ import {
 } from './types';
 
 import * as authorApi from '../api/authorApi';
+import {apiCallError, beginApiCall} from './apiStatusActions';
 
 function loadAuthorsSuccess(authors) {
   return {
@@ -14,9 +15,11 @@ function loadAuthorsSuccess(authors) {
 // Thunk
 export function loadAuthors() {
   return function(dispatch) {
+    dispatch(beginApiCall());
     return authorApi.getAuthors().then(authors => {
       dispatch(loadAuthorsSuccess(authors));
     }).catch(error => {
+      dispatch(apiCallError(error));
       throw error;
     })
   }
