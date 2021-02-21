@@ -1,1 +1,1 @@
-Project using React and Redux
+Project using React and Redux.
