@@ -1,13 +1,6 @@
 {
   "courses": [
     {
-      "id": 1,
-      "title": "Securing React Apps with Auth6",
-      "slug": "react-auth0-authentication-security",
-      "authorId": 1,
-      "category": "JavaScript"
-    },
-    {
       "id": 2,
       "title": "React: The Big Picture",
       "slug": "react-big-picture",
@@ -48,27 +41,6 @@
       "slug": "writing-clean-code-humans",
       "authorId": 1,
       "category": "Software Practices"
-    },
-    {
-      "id": 8,
-      "title": "Architecting Applications for the Real World",
-      "slug": "architecting-applications-dotnet",
-      "authorId": 1,
-      "category": "Software Architecture"
-    },
-    {
-      "id": 9,
-      "title": "Becoming an Outlier: Reprogramming the Developer Mind",
-      "slug": "career-reboot-for-developer-mind",
-      "authorId": 1,
-      "category": "Career"
-    },
-    {
-      "id": 10,
-      "title": "Web Component Fundamentals",
-      "slug": "web-components-shadow-dom",
-      "authorId": 1,
-      "category": "HTML5"
     }
   ],
   "authors": [

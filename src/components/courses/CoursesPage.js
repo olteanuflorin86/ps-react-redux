@@ -11,6 +11,8 @@ import Spinner from '../common/Spinner';
 import { deleteCourse } from '../../api/courseApi';
 import { toast } from 'react-toastify';
 
+import regeneratorRuntime from "regenerator-runtime";
+
 class CoursesPage extends React.Component {
   // Maybe instead of a constructor we can add a class field like bellow:
   // state = {

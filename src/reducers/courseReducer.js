@@ -14,7 +14,7 @@ export default function courseReducer(state = [], action) {
       return [...state, {...action.payload}];
     case UPDATE_COURSE_SUCCESS:
       return state.map(course => {
-        course.id === action.payload.id ? action.payload : course
+        return course.id === action.payload.id ? action.payload : course
       });
     case DELETE_COURSE_OPTIMISTIC:
       // return all the courses except the one that we want deleted

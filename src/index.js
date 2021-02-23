@@ -4,7 +4,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {Provider} from 'react-redux'; 
-import store from './store';
+import store from './configureStore';
 
 import './index.css';
 

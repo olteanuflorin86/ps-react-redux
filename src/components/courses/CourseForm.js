@@ -54,7 +54,7 @@ const CourseForm = ({authors, course, errors={}, onChange, onSave, saving=false}
         disabled={saving}
         className="btn btn-primary"
       >
-        {saving ? "Saving..." : "Save "}
+        {saving ? "Saving..." : "Save"}
       </button>
 
     </form>

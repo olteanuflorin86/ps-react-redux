@@ -13,7 +13,7 @@ import Spinner from '../common/Spinner';
 
 import {toast} from 'react-toastify';
 
-const ManageCoursePages = (props) => {
+export const ManageCoursePage = (props) => {
   // we need local state to save data from the form before it is send - we use useState 
 
     // props.course refers to newCourse from mockData
@@ -53,9 +53,9 @@ const ManageCoursePages = (props) => {
     const {title, authorId, category} = course;
     const errors = {};
 
-    if(!title) errors.title = "Title is required,"; 
-    if(!authorId) errors.author = "Author is required,"; 
-    if(!category) errors.category = "Category is required,"; 
+    if(!title) errors.title = "Title is required."; 
+    if(!authorId) errors.author = "Author is required."; 
+    if(!category) errors.category = "Category is required."; 
 
     setErrors(errors);
     // Form is valid if the erros object still has no properties
@@ -91,7 +91,7 @@ const ManageCoursePages = (props) => {
   )
 }
 
-ManageCoursePages.proptypes = {
+ManageCoursePage.proptypes = {
   course: PropTypes.object.isRequired,
   courses: PropTypes.array.isRequired,
   authors: PropTypes.array.isRequired,
@@ -137,4 +137,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePages);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);

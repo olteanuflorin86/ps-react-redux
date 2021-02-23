@@ -7,7 +7,7 @@ import AboutPage from './AboutPage';
 import PageNotFound from './PageNotFound';
 
 import CoursesPage from './courses/CoursesPage';
-import ManageCoursesPage from './courses/ManageCoursePages';
+import ManageCoursesPage from './courses/ManageCoursePage'; 
 
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
